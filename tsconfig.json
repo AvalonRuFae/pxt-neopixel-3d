@@ -1,8 +1,26 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "noImplicitAny": true,
+        "noImplicitAny": false,
+        "noImplicitReturns": false,
+        "noImplicitThis": false,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
         "outDir": "built",
-        "rootDir": "."
-    }
+        "rootDir": ".",
+        "lib": ["es5", "dom"],
+        "moduleResolution": "node",
+        "typeRoots": ["./types", "./node_modules/@types"]
+    },
+    "include": [
+        "*.ts",
+        "types/**/*.d.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "built",
+        "pxt_modules"
+    ]
 }
