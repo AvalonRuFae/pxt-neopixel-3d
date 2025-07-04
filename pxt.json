@@ -22,6 +22,10 @@
         "neotest.ts"
     ],
     "public": true,
+    "targetVersions": {
+        "target": "7.0.61",
+        "targetId": "microbit"
+    },
     "supportedTargets": [
         "microbit"
     ],
