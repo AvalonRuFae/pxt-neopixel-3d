@@ -209,7 +209,7 @@ namespace neopixel_3d {
         //% blockId=neopixel_set_cube_width block="%strip cube width %width"
         //% strip.defl=strip
         //% blockGap=8
-        //% weight=5
+        //% weight=3
         //% parts="neopixel" advanced=true
         setCubeWidth(width: number) {
             width = width >> 0;
@@ -258,7 +258,7 @@ namespace neopixel_3d {
          */
         //% blockId="neopixel_cube_color" block="%strip cube %x %y %z %rgb=neopixel_colors"
         //% strip.defl=strip
-        //% weight=4
+        //% weight=2
         //% parts="neopixel" advanced=true
         setCubeColor(x: number, y: number, z: number, rgb: number) {
             if (this._cubeWidth <= 0) return; // not a cube, ignore
