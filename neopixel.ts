@@ -40,7 +40,7 @@ enum NeoPixelMode {
  * Functions to operate NeoPixel strips.
  */
 //% weight=5 color=#2699BF icon="\uf110"
-namespace neopixel {
+namespace neopixel_3d {
     /**
      * A NeoPixel strip
      */
@@ -166,7 +166,7 @@ namespace neopixel {
                 for (let i = 0; i < n; ++i) {
                     if (i <= v) {
                         const b = Math.idiv(i * 255, n1);
-                        this.setPixelColor(i, neopixel.rgb(b, 0, 255 - b));
+                        this.setPixelColor(i, neopixel_3d.rgb(b, 0, 255 - b));
                     }
                     else this.setPixelColor(i, 0);
                 }
@@ -206,7 +206,7 @@ namespace neopixel {
          * Sets the number of pixels in a cube shaped strip
          * @param width number of pixels in a row
          */
-        //% blockId=neopixel_set_cube_width block="%strip|set cube width %width"
+        //% blockId=neopixel_set_cube_width block="%strip set cube width %width"
         //% strip.defl=strip
         //% blockGap=8
         //% weight=5
@@ -256,7 +256,7 @@ namespace neopixel {
          * @param z vertical position
          * @param rgb RGB color of the LED
          */
-        //% blockId="neopixel_set_cube_color" block="%strip|set cube color at x %x|y %y|z %z|to %rgb=neopixel_colors"
+        //% blockId="neopixel_set_cube_color" block="%strip set cube color at x %x y %y z %z to %rgb=neopixel_colors"
         //% strip.defl=strip
         //% weight=4
         //% parts="neopixel" advanced=true
