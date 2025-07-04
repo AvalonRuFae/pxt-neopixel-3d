@@ -206,7 +206,7 @@ namespace neopixel_3d {
          * Sets the number of pixels in a cube shaped strip
          * @param width number of pixels in a row
          */
-        //% blockId=neopixel_set_cube_width block="%strip set cube width %width"
+        //% blockId=neopixel_set_cube_width block="%strip cube width %width"
         //% strip.defl=strip
         //% blockGap=8
         //% weight=5
@@ -256,7 +256,7 @@ namespace neopixel_3d {
          * @param z vertical position
          * @param rgb RGB color of the LED
          */
-        //% blockId="neopixel_set_cube_color" block="%strip set cube color at x %x y %y z %z to %rgb=neopixel_colors"
+        //% blockId="neopixel_cube_color" block="%strip cube (%x, %y, %z) = %rgb=neopixel_colors"
         //% strip.defl=strip
         //% weight=4
         //% parts="neopixel" advanced=true
