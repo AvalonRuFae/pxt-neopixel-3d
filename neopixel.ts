@@ -256,7 +256,7 @@ namespace neopixel_3d {
          * @param z vertical position
          * @param rgb RGB color of the LED
          */
-        //% blockId="neopixel_set_cube_color" block="%strip cube x %x y %y z %z color %rgb=neopixel_colors"
+        //% blockId="neopixel_set_cube_color" block="%strip|cube x %x|y %y|z %z|color %rgb=neopixel_colors"
         //% strip.defl=strip
         //% weight=2
         //% parts="neopixel" advanced=true
