@@ -1,4 +1,4 @@
-#Neopixel - 3d
+# Neopixel - 3d
 This project aims to add 3d cube support on top of the microsoft neopixel extension
 On top of the original extension, two functions are added:
     setCubeWidth: allows user to initialize the cube
