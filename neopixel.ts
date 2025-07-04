@@ -53,6 +53,7 @@ namespace neopixel {
         _length: number; // number of LEDs
         _mode: NeoPixelMode;
         _matrixWidth: number; // number of leds in a matrix - if any
+        _cubeWidth: number; // number of leds in a cube - if any
 
         /**
          * Shows all LEDs to a given color (range 0-255 for r, g, b).
@@ -202,6 +203,30 @@ namespace neopixel {
         }
 
         /**
+         * Sets the number of pixels in a cube shaped strip
+         * @param width number of pixels in a row
+         */
+        //% blockId=neopixel_set_cube_width block="%strip|set cube width %width"
+        //% strip.defl=strip
+        //% blockGap=8
+        //% weight=5
+        //% parts="neopixel" advanced=true
+        setCubeWidth(width: number) {
+            width = width >> 0;
+            if (width <= 0) {
+                this._cubeWidth = 0;
+                return;
+            }
+            const volume = width * width * width;
+            if (volume > this._length) {
+                // if the cube is larger than the strip, we ignore it
+                this._cubeWidth = 0;
+                return;
+            }
+            this._cubeWidth = width >> 0;
+        }
+
+        /**
          * Set LED to a given color (range 0-255 for r, g, b) in a matrix shaped strip
          * You need to call ``show`` to make the changes visible.
          * @param x horizontal position
@@ -220,6 +245,31 @@ namespace neopixel {
             const cols = Math.idiv(this._length, this._matrixWidth);
             if (x < 0 || x >= this._matrixWidth || y < 0 || y >= cols) return;
             let i = x + y * this._matrixWidth;
+            this.setPixelColor(i, rgb);
+        }
+
+        /**
+         * Set LED to a given color (range 0-255 for r, g, b) in a cube shaped strip
+         * You need to call ``show`` to make the changes visible.
+         * @param x horizontal position
+         * @param y horizontal position
+         * @param z vertical position
+         * @param rgb RGB color of the LED
+         */
+        //% blockId="neopixel_set_cube_color" block="%strip|set cube color at x %x|y %y|z %z|to %rgb=neopixel_colors"
+        //% strip.defl=strip
+        //% weight=4
+        //% parts="neopixel" advanced=true
+        setCubeColor(x: number, y: number, z: number, rgb: number) {
+            if (this._cubeWidth <= 0) return; // not a cube, ignore
+            x = x >> 0;
+            y = y >> 0;
+            z = z >> 0;
+            rgb = rgb >> 0;
+            const cols = Math.idiv(this._length, this._cubeWidth**2);
+            const rows = Math.idiv(this._length, cols**2);
+            if (x < 0 || x >= this._cubeWidth || y < 0 || y >= cols || z < 0 || z >= rows) return;
+            let i = x + y * this._cubeWidth + z * this._cubeWidth * cols;
             this.setPixelColor(i, rgb);
         }
 
