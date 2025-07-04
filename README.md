@@ -1,7 +1,10 @@
 # Neopixel - 3d
 This project aims to add 3d cube support on top of the microsoft neopixel extension
+
 On top of the original extension, two functions are added:
+
     setCubeWidth: allows user to initialize the cube
+    
     setCubeColor: allows user to set color in the cube with xyz coordinates.
 
 Below is the original readme file from microsoft
