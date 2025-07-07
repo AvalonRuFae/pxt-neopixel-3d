@@ -206,7 +206,7 @@ namespace neopixel_3d {
          * Sets the number of pixels in a cube shaped strip
          * @param width number of pixels in a row
          */
-        //% blockId=neopixel_set_cube_width block="%strip cube width %width"
+        //% blockId=neopixel_set_cube_width block="%strip|set cube width %width"
         //% strip.defl=strip
         //% blockGap=8
         //% weight=3
@@ -258,7 +258,7 @@ namespace neopixel_3d {
          */
         //% blockId="neopixel_set_cube_color" block="%strip cube x %x y %y z %z color %rgb=neopixel_colors"
         //% strip.defl=strip
-        //% weight=2
+        //% weight=5
         //% parts="neopixel" advanced=true
         setCubeColor(x: number, y: number, z: number, rgb: number) {
             if (this._cubeWidth <= 0) return; // not a cube, ignore
