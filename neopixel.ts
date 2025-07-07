@@ -258,7 +258,7 @@ namespace neopixel_3d {
          */
         //% blockId="neopixel_set_cube_color" block="for cube %strip x-coordinate %x y-coordinate %y z-coordinate %z set to color %rgb=neopixel_colors"
         //% strip.defl=strip
-        //% weight=5
+        //% weight=8
         //% parts="neopixel" advanced=true
         setCubeColor(x: number, y: number, z: number, rgb: number) {
             if (this._cubeWidth <= 0) return; // not a cube, ignore
