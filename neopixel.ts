@@ -208,7 +208,7 @@ namespace neopixel_3d {
 		 * @param y number of pixels in y
 		 * @param z number of pixels in z
 		 */
-		//% blockId=neopixel_set_cube_width block="%strip|set cube size x %x y %y z %x"
+		//% blockId=neopixel_set_cube_width block="%strip|set cube size x %x y %y z %z"
 		//% strip.defl=strip
 		//% blockGap=8
 		//% weight=3
