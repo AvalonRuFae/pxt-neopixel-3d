@@ -404,21 +404,21 @@ namespace neopixel_3d {
 		y = y >> 0;
 		z = z >> 0;
 		if (x <= 0 || y <= 0 || z <= 0) {
-			this._cubeWidthX = 0;
-			this._cubeWidthY = 0;
-			this._cubeWidthZ = 0;
+			strip._cubeWidthX = 0;
+			strip._cubeWidthY = 0;
+			strip._cubeWidthZ = 0;
 			return;
 		}
 		const volume = x * y * z;
-		if (volume > this._length) {
-			this._cubeWidthX = 0;
-			this._cubeWidthY = 0;
-			this._cubeWidthZ = 0;
+		if (volume > strip._length) {
+			strip._cubeWidthX = 0;
+			strip._cubeWidthY = 0;
+			strip._cubeWidthZ = 0;
 			return;
 		}
-		this._cubeWidthX = x;
-		this._cubeWidthY = y;
-		this._cubeWidthZ = z;
+		strip._cubeWidthX = x;
+		strip._cubeWidthY = y;
+		strip._cubeWidthZ = z;
 		return strip;
 	}
 
