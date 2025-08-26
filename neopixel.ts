@@ -73,39 +73,6 @@ namespace neopixel_3d {
 		}
 
 		/**
-		 * Sets the number of pixels in a cube shaped strip
-		 * @param x number of pixels in x
-		 * @param y number of pixels in y
-		 * @param z number of pixels in z
-		 */
-		//% blockId=neopixel_set_cube_width block="%strip|set cube size x %x y %y z %z"
-		//% strip.defl=strip
-		//% blockGap=8
-		//% weight=3
-		//% parts="neopixel"
-		setCubeWidth(x: number, y: number, z: number) {
-			x = x >> 0;
-			y = y >> 0;
-			z = z >> 0;
-			if (x <= 0 || y <= 0 || z <= 0) {
-				this._cubeWidthX = 0;
-				this._cubeWidthY = 0;
-				this._cubeWidthZ = 0;
-				return;
-			}
-			const volume = x * y * z;
-			if (volume > this._length) {
-				this._cubeWidthX = 0;
-				this._cubeWidthY = 0;
-				this._cubeWidthZ = 0;
-				return;
-			}
-			this._cubeWidthX = x;
-			this._cubeWidthY = y;
-			this._cubeWidthZ = z;
-		}
-
-		/**
 		 * Set LED to a given color (range 0-255 for r, g, b) in a cube shaped strip
 		 * You need to call ``show`` to make the changes visible.
 		 * @param x horizontal position
@@ -411,16 +378,19 @@ namespace neopixel_3d {
 	 * @param pin the pin where the neopixel is connected.
 	 * @param numleds number of leds in the strip, eg: 24,30,60,64
 	 */
-	//% blockId="neopixel_create" block="NeoPixel at pin %pin|with %numleds|leds as %mode"
+	//% blockId="neopixel_create" block="NeoPixel cube at pin %pin|size %x|by %y|by %z|as %mode"
 	//% weight=90 blockGap=8
 	//% parts="neopixel"
 	//% trackArgs=0,2
 	//% blockSetVariable=strip
 	export function create(
 		pin: DigitalPin,
-		numleds: number,
+		x: number,
+		y: number,
+		z: number,
 		mode: NeoPixelMode
 	): Strip {
+		const numleds = x * y * z;
 		let strip = new Strip();
 		let stride = mode === NeoPixelMode.RGBW ? 4 : 3;
 		strip.buf = pins.createBuffer(numleds * stride);
@@ -430,6 +400,25 @@ namespace neopixel_3d {
 		strip._matrixWidth = 0;
 		strip.setBrightness(128);
 		strip.setPin(pin);
+		x = x >> 0;
+		y = y >> 0;
+		z = z >> 0;
+		if (x <= 0 || y <= 0 || z <= 0) {
+			this._cubeWidthX = 0;
+			this._cubeWidthY = 0;
+			this._cubeWidthZ = 0;
+			return;
+		}
+		const volume = x * y * z;
+		if (volume > this._length) {
+			this._cubeWidthX = 0;
+			this._cubeWidthY = 0;
+			this._cubeWidthZ = 0;
+			return;
+		}
+		this._cubeWidthX = x;
+		this._cubeWidthY = y;
+		this._cubeWidthZ = z;
 		return strip;
 	}
 
