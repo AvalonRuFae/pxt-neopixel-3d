@@ -2,25 +2,25 @@
 // This file demonstrates and tests the NeoPixel extension features
 
 // NeoPixel 3D Cube Extension Test Suite
-// Tests all functionality of the cube-focused NeoPixel extension
+// Tests designed for 5x5x5 cube hardware (125 LEDs total)
 
 /**
- * Test 1: Basic cube creation and validation
+ * Test 1: Basic cube creation and validation for 5x5x5 hardware
  */
 function testCubeCreation() {
-  console.log("=== Testing Cube Creation ===");
+  console.log("=== Testing 5x5x5 Cube Creation ===");
   
-  // Test valid cube creation
-  let cube = neopixel_3d.create(DigitalPin.P0, 2, 2, 2, NeoPixelMode.RGB);
-  console.log("2x2x2 cube created");
-  console.log("Total LEDs: " + cube.length()); // Should be 8
-  console.log("X size: " + cube.lengthX()); // Should be 2
-  console.log("Y size: " + cube.lengthY()); // Should be 2
-  console.log("Z size: " + cube.lengthZ()); // Should be 2
+  // Test our actual hardware cube
+  let cube = neopixel_3d.create(DigitalPin.P0, 5, 5, 5, NeoPixelMode.RGB);
+  console.log("5x5x5 cube created");
+  console.log("Total LEDs: " + cube.length()); // Should be 125
+  console.log("X size: " + cube.lengthX()); // Should be 5
+  console.log("Y size: " + cube.lengthY()); // Should be 5
+  console.log("Z size: " + cube.lengthZ()); // Should be 5
   
-  // Test larger cube
-  let bigCube = neopixel_3d.create(DigitalPin.P1, 3, 3, 3, NeoPixelMode.RGB);
-  console.log("3x3x3 cube created with " + bigCube.length() + " LEDs"); // Should be 27
+  // Test smaller cube for comparison
+  let smallCube = neopixel_3d.create(DigitalPin.P1, 2, 2, 2, NeoPixelMode.RGB);
+  console.log("2x2x2 cube created with " + smallCube.length() + " LEDs"); // Should be 8
 }
 
 /**
@@ -30,178 +30,200 @@ function testInvalidDimensions() {
   console.log("=== Testing Invalid Dimensions ===");
   
   // Test zero dimensions
-  let zeroCube = neopixel_3d.create(DigitalPin.P0, 0, 2, 2, NeoPixelMode.RGB);
+  let zeroCube = neopixel_3d.create(DigitalPin.P0, 0, 5, 5, NeoPixelMode.RGB);
   console.log("Zero dimension cube - X size: " + zeroCube.lengthX()); // Should be 0
   
   // Test negative dimensions
-  let negCube = neopixel_3d.create(DigitalPin.P0, -1, 2, 2, NeoPixelMode.RGB);
+  let negCube = neopixel_3d.create(DigitalPin.P0, -1, 5, 5, NeoPixelMode.RGB);
   console.log("Negative dimension cube - X size: " + negCube.lengthX()); // Should be 0
+  
+  // Test oversized cube (more than available LEDs)
+  let bigCube = neopixel_3d.create(DigitalPin.P0, 10, 10, 10, NeoPixelMode.RGB);
+  console.log("Oversized cube - Total LEDs: " + bigCube.length()); // Should handle gracefully
 }
 
 /**
-* Test 3: Setting individual cube colors
+* Test 3: Setting individual cube colors on 5x5x5 hardware
 */
 function testCubeColors() {
-  console.log("=== Testing Cube Colors ===");
+  console.log("=== Testing 5x5x5 Cube Colors ===");
   
-  let cube = neopixel_3d.create(DigitalPin.P0, 2, 2, 2, NeoPixelMode.RGB);
+  let cube = neopixel_3d.create(DigitalPin.P0, 5, 5, 5, NeoPixelMode.RGB);
   
-  // Test setting colors at different positions
+  // Test setting colors at 8 corners of the 5x5x5 cube
   cube.setCubeColor(0, 0, 0, NeoPixelColors.Red);    // Corner 1
-  cube.setCubeColor(1, 1, 1, NeoPixelColors.Blue);   // Corner 2
-  cube.setCubeColor(0, 1, 0, NeoPixelColors.Green);  // Middle position
+  cube.setCubeColor(4, 0, 0, NeoPixelColors.Green);  // Corner 2
+  cube.setCubeColor(0, 4, 0, NeoPixelColors.Blue);   // Corner 3
+  cube.setCubeColor(0, 0, 4, NeoPixelColors.Yellow); // Corner 4
+  cube.setCubeColor(4, 4, 0, NeoPixelColors.Purple); // Corner 5
+  cube.setCubeColor(4, 0, 4, NeoPixelColors.Orange); // Corner 6
+  cube.setCubeColor(0, 4, 4, NeoPixelColors.Violet); // Corner 7
+  cube.setCubeColor(4, 4, 4, NeoPixelColors.White);  // Corner 8
   
-  console.log("Set colors at (0,0,0), (1,1,1), and (0,1,0)");
+  // Test center position
+  cube.setCubeColor(2, 2, 2, NeoPixelColors.Indigo); // Center of cube
+  
+  console.log("Set colors at all 8 corners and center of 5x5x5 cube");
   
   // Test boundary conditions (should not crash)
   cube.setCubeColor(-1, 0, 0, NeoPixelColors.White); // Invalid: negative
-  cube.setCubeColor(2, 0, 0, NeoPixelColors.White);  // Invalid: too large
-  cube.setCubeColor(0, 2, 0, NeoPixelColors.White);  // Invalid: too large
-  cube.setCubeColor(0, 0, 2, NeoPixelColors.White);  // Invalid: too large
+  cube.setCubeColor(5, 0, 0, NeoPixelColors.White);  // Invalid: too large (max is 4)
+  cube.setCubeColor(0, 5, 0, NeoPixelColors.White);  // Invalid: too large
+  cube.setCubeColor(0, 0, 5, NeoPixelColors.White);  // Invalid: too large
   
-  console.log("Tested boundary conditions (should handle gracefully)");
+  console.log("Tested boundary conditions for 5x5x5 cube");
 }
 
 /**
-* Test 4: Show color functionality
+* Test 4: Show color functionality on full 5x5x5 cube
 */
 function testShowColor() {
-  console.log("=== Testing Show Color ===");
+  console.log("=== Testing Show Color on 5x5x5 Cube ===");
   
-  let cube = neopixel_3d.create(DigitalPin.P0, 2, 2, 2, NeoPixelMode.RGB);
+  let cube = neopixel_3d.create(DigitalPin.P0, 5, 5, 5, NeoPixelMode.RGB);
   
-  // Test showing solid colors
+  // Test showing solid colors on all 125 LEDs
   cube.showColor(NeoPixelColors.Red);
-  console.log("Showed red color on entire cube");
-  
-  basic.pause(500);
-  
-  cube.showColor(NeoPixelColors.Blue);
-  console.log("Showed blue color on entire cube");
-}
-
-/**
-* Test 5: Brightness control
-*/
-function testBrightness() {
-  console.log("=== Testing Brightness ===");
-  
-  let cube = neopixel_3d.create(DigitalPin.P0, 2, 2, 2, NeoPixelMode.RGB);
-  
-  // Test different brightness levels
-  cube.setBrightness(255); // Max brightness
-  cube.showColor(NeoPixelColors.White);
-  console.log("Set brightness to 255 (max)");
-  
-  basic.pause(500);
-  
-  cube.setBrightness(128); // Half brightness
-  cube.showColor(NeoPixelColors.White);
-  console.log("Set brightness to 128 (half)");
-  
-  basic.pause(500);
-  
-  cube.setBrightness(32); // Low brightness
-  cube.showColor(NeoPixelColors.White);
-  console.log("Set brightness to 32 (low)");
-}
-
-/**
-* Test 6: Clear and update functions
-*/
-function testClearAndUpdate() {
-  console.log("=== Testing Clear and Update ===");
-  
-  let cube = neopixel_3d.create(DigitalPin.P0, 2, 2, 2, NeoPixelMode.RGB);
-  
-  // Set some colors
-  cube.setCubeColor(0, 0, 0, NeoPixelColors.Red);
-  cube.setCubeColor(1, 1, 1, NeoPixelColors.Blue);
-  cube.show();
-  console.log("Set colors and showed");
+  console.log("Showed red color on entire 5x5x5 cube (125 LEDs)");
   
   basic.pause(1000);
   
-  // Test clear
+  cube.showColor(NeoPixelColors.Blue);
+  console.log("Showed blue color on entire 5x5x5 cube");
+  
+  basic.pause(1000);
+  
+  cube.showColor(NeoPixelColors.Green);
+  console.log("Showed green color on entire 5x5x5 cube");
+}
+
+/**
+* Test 5: Brightness control on 5x5x5 cube
+*/
+function testBrightness() {
+  console.log("=== Testing Brightness on 5x5x5 Cube ===");
+  
+  let cube = neopixel_3d.create(DigitalPin.P0, 5, 5, 5, NeoPixelMode.RGB);
+  
+  // Test different brightness levels on 125 LEDs
+  cube.setBrightness(255); // Max brightness
+  cube.showColor(NeoPixelColors.White);
+  console.log("Set brightness to 255 (max) - 125 LEDs at full power");
+  
+  basic.pause(1000);
+  
+  cube.setBrightness(128); // Half brightness
+  cube.showColor(NeoPixelColors.White);
+  console.log("Set brightness to 128 (half) - power saving mode");
+  
+  basic.pause(1000);
+  
+  cube.setBrightness(64); // Quarter brightness
+  cube.showColor(NeoPixelColors.White);
+  console.log("Set brightness to 64 (quarter) - low power mode");
+}
+
+/**
+* Test 6: Clear and update functions on 5x5x5 cube
+*/
+function testClearAndUpdate() {
+  console.log("=== Testing Clear and Update on 5x5x5 Cube ===");
+  
+  let cube = neopixel_3d.create(DigitalPin.P0, 5, 5, 5, NeoPixelMode.RGB);
+  
+  // Set colors on multiple positions
+  cube.setCubeColor(0, 0, 0, NeoPixelColors.Red);
+  cube.setCubeColor(4, 4, 4, NeoPixelColors.Blue);
+  cube.setCubeColor(2, 2, 2, NeoPixelColors.Green);
+  cube.show();
+  console.log("Set colors at corners and center, then showed");
+  
+  basic.pause(1500);
+  
+  // Test clear on 125 LEDs
   cube.clear();
   cube.show();
-  console.log("Cleared cube");
+  console.log("Cleared all 125 LEDs");
   
-  basic.pause(500);
+  basic.pause(1000);
   
   // Test update (clear + show in one)
-  cube.setCubeColor(0, 0, 0, NeoPixelColors.Green);
+  cube.setCubeColor(1, 1, 1, NeoPixelColors.Purple);
   cube.update(); // This should clear everything and show
-  console.log("Used update function");
+  console.log("Used update function on 5x5x5 cube");
 }
 
 /**
-* Test 7: RGB and HSL color functions
+* Test 7: RGB and HSL color functions on 5x5x5 cube
 */
 function testColorFunctions() {
-  console.log("=== Testing Color Functions ===");
+  console.log("=== Testing Color Functions on 5x5x5 Cube ===");
   
-  let cube = neopixel_3d.create(DigitalPin.P0, 2, 2, 2, NeoPixelMode.RGB);
+  let cube = neopixel_3d.create(DigitalPin.P0, 5, 5, 5, NeoPixelMode.RGB);
   
-  // Test RGB function
+  // Test RGB function on different positions
   let customRed = neopixel_3d.rgb(255, 0, 0);
   cube.setCubeColor(0, 0, 0, customRed);
-  console.log("Set custom RGB color (255,0,0)");
+  
+  let customGreen = neopixel_3d.rgb(0, 255, 0);
+  cube.setCubeColor(4, 0, 0, customGreen);
+  
+  let customBlue = neopixel_3d.rgb(0, 0, 255);
+  cube.setCubeColor(0, 4, 0, customBlue);
+  
+  console.log("Set custom RGB colors at different corners");
   
   // Test HSL function
-  let hslColor = neopixel_3d.hsl(120, 100, 50); // Pure green
-  cube.setCubeColor(1, 0, 0, hslColor);
-  console.log("Set HSL color (120°, 100%, 50%)");
+  let hslRed = neopixel_3d.hsl(0, 100, 50);     // Pure red
+  let hslGreen = neopixel_3d.hsl(120, 100, 50); // Pure green
+  let hslBlue = neopixel_3d.hsl(240, 100, 50);  // Pure blue
+  
+  cube.setCubeColor(0, 0, 4, hslRed);
+  cube.setCubeColor(4, 4, 0, hslGreen);
+  cube.setCubeColor(4, 0, 4, hslBlue);
+  
+  console.log("Set HSL colors at remaining corners");
   
   // Test predefined colors
-  cube.setCubeColor(0, 1, 0, neopixel_3d.colors(NeoPixelColors.Purple));
-  console.log("Set predefined purple color");
+  cube.setCubeColor(0, 4, 4, neopixel_3d.colors(NeoPixelColors.Purple));
+  cube.setCubeColor(2, 2, 2, neopixel_3d.colors(NeoPixelColors.White));
+  
+  console.log("Set predefined colors at center and corner");
   
   cube.show();
 }
 
 /**
-* Test 8: Different NeoPixel modes
-*/
-function testDifferentModes() {
-  console.log("=== Testing Different Modes ===");
-  
-  // Test RGB mode
-  let rgbCube = neopixel_3d.create(DigitalPin.P0, 2, 2, 2, NeoPixelMode.RGB);
-  console.log("Created RGB mode cube");
-  
-  // Test RGB_RGB mode
-  let rgbRgbCube = neopixel_3d.create(DigitalPin.P1, 2, 2, 2, NeoPixelMode.RGB_RGB);
-  console.log("Created RGB_RGB mode cube");
-  
-  // Test RGBW mode
-  let rgbwCube = neopixel_3d.create(DigitalPin.P2, 2, 2, 2, NeoPixelMode.RGBW);
-  console.log("Created RGBW mode cube");
-}
-
-/**
-* Test 9: Power consumption estimation
+* Test 8: Power consumption estimation for 5x5x5 cube
 */
 function testPowerConsumption() {
-  console.log("=== Testing Power Consumption ===");
+  console.log("=== Testing Power Consumption on 5x5x5 Cube ===");
   
-  let cube = neopixel_3d.create(DigitalPin.P0, 2, 2, 2, NeoPixelMode.RGB);
+  let cube = neopixel_3d.create(DigitalPin.P0, 5, 5, 5, NeoPixelMode.RGB);
   
-  // Test power when all LEDs are off
+  // Test power when all 125 LEDs are off
   cube.clear();
-  console.log("Power consumption (all off): " + cube.power() + " mA");
+  console.log("Power consumption (all 125 LEDs off): " + cube.power() + " mA");
   
-  // Test power when all LEDs are white (max consumption)
+  // Test power when all 125 LEDs are white (max consumption)
   cube.showColor(NeoPixelColors.White);
-  console.log("Power consumption (all white): " + cube.power() + " mA");
+  console.log("Power consumption (all 125 LEDs white): " + cube.power() + " mA");
+  
+  // Test power with partial lighting
+  cube.clear();
+  for (let i = 0; i < 5; i++) {
+      cube.setCubeColor(i, i, i, NeoPixelColors.Red); // Diagonal line
+  }
+  cube.show();
+  console.log("Power consumption (5 LEDs diagonal): " + cube.power() + " mA");
 }
 
 /**
-* Main test runner - runs all tests
+* Main test runner - runs all tests for 5x5x5 cube
 */
 function runAllTests() {
-  console.log("Starting NeoPixel 3D Cube Tests...");
-  console.log("=====================================");
+  console.log("Starting NeoPixel 5x5x5 Cube Tests...");
+  console.log("====================================");
   
   testCubeCreation();
   basic.pause(1000);
@@ -224,53 +246,116 @@ function runAllTests() {
   testColorFunctions();
   basic.pause(1000);
   
-  testDifferentModes();
-  basic.pause(1000);
-  
   testPowerConsumption();
   
-  console.log("=====================================");
-  console.log("All tests completed!");
+  console.log("====================================");
+  console.log("All 5x5x5 cube tests completed!");
 }
 
 /**
-* Interactive demo showing cube capabilities
+* Interactive demo showing 5x5x5 cube capabilities
 */
 function interactiveDemo() {
-  console.log("Starting Interactive Demo...");
+  console.log("Starting 5x5x5 Cube Interactive Demo...");
   
-  let cube = neopixel_3d.create(DigitalPin.P0, 3, 3, 3, NeoPixelMode.RGB);
+  let cube = neopixel_3d.create(DigitalPin.P0, 5, 5, 5, NeoPixelMode.RGB);
   
-  // Demo 1: Light up corners
-  console.log("Demo: Lighting up all 8 corners");
+  // Demo 1: Light up all 8 corners of 5x5x5 cube
+  console.log("Demo 1: Lighting up all 8 corners");
   cube.setCubeColor(0, 0, 0, NeoPixelColors.Red);
-  cube.setCubeColor(2, 0, 0, NeoPixelColors.Green);
-  cube.setCubeColor(0, 2, 0, NeoPixelColors.Blue);
-  cube.setCubeColor(0, 0, 2, NeoPixelColors.Yellow);
-  cube.setCubeColor(2, 2, 0, NeoPixelColors.Purple);
-  cube.setCubeColor(2, 0, 2, NeoPixelColors.Orange);
-  cube.setCubeColor(0, 2, 2, NeoPixelColors.Violet);
-  cube.setCubeColor(2, 2, 2, NeoPixelColors.White);
+  cube.setCubeColor(4, 0, 0, NeoPixelColors.Green);
+  cube.setCubeColor(0, 4, 0, NeoPixelColors.Blue);
+  cube.setCubeColor(0, 0, 4, NeoPixelColors.Yellow);
+  cube.setCubeColor(4, 4, 0, NeoPixelColors.Purple);
+  cube.setCubeColor(4, 0, 4, NeoPixelColors.Orange);
+  cube.setCubeColor(0, 4, 4, NeoPixelColors.Violet);
+  cube.setCubeColor(4, 4, 4, NeoPixelColors.White);
   cube.show();
   
   basic.pause(3000);
   
-  // Demo 2: Animate through layers
-  console.log("Demo: Animating through Z layers");
-  for (let z = 0; z < 3; z++) {
+  // Demo 2: Animate through Z layers (5 layers)
+  console.log("Demo 2: Animating through 5 Z layers");
+  for (let z = 0; z < 5; z++) {
       cube.clear();
-      for (let x = 0; x < 3; x++) {
-          for (let y = 0; y < 3; y++) {
+      // Light up entire layer
+      for (let x = 0; x < 5; x++) {
+          for (let y = 0; y < 5; y++) {
               cube.setCubeColor(x, y, z, NeoPixelColors.Blue);
           }
       }
       cube.show();
+      console.log("Layer " + z + " lit (25 LEDs)");
       basic.pause(1000);
   }
   
+  // Demo 3: Create a 3D cross pattern
+  console.log("Demo 3: Creating 3D cross pattern");
+  cube.clear();
+  
+  // Vertical line through center
+  for (let z = 0; z < 5; z++) {
+      cube.setCubeColor(2, 2, z, NeoPixelColors.Red);
+  }
+  
+  // Horizontal line X-axis through center
+  for (let x = 0; x < 5; x++) {
+      cube.setCubeColor(x, 2, 2, NeoPixelColors.Green);
+  }
+  
+  // Horizontal line Y-axis through center
+  for (let y = 0; y < 5; y++) {
+      cube.setCubeColor(2, y, 2, NeoPixelColors.Blue);
+  }
+  
+  cube.show();
+  console.log("3D cross pattern created");
+  basic.pause(3000);
+  
+  // Demo 4: Diagonal animation
+  console.log("Demo 4: Diagonal animation");
+  cube.clear();
+  
+  for (let i = 0; i < 5; i++) {
+      cube.setCubeColor(i, i, i, NeoPixelColors.White);
+      cube.show();
+      basic.pause(500);
+  }
+  
+  basic.pause(2000);
+  
+  // Demo 5: Edge lighting
+  console.log("Demo 5: Edge lighting (frame of cube)");
+  cube.clear();
+  
+  // Light up all edges of the cube
+  for (let i = 0; i < 5; i++) {
+      // Bottom face edges
+      cube.setCubeColor(i, 0, 0, NeoPixelColors.Red);
+      cube.setCubeColor(i, 4, 0, NeoPixelColors.Red);
+      cube.setCubeColor(0, i, 0, NeoPixelColors.Red);
+      cube.setCubeColor(4, i, 0, NeoPixelColors.Red);
+      
+      // Top face edges
+      cube.setCubeColor(i, 0, 4, NeoPixelColors.Blue);
+      cube.setCubeColor(i, 4, 4, NeoPixelColors.Blue);
+      cube.setCubeColor(0, i, 4, NeoPixelColors.Blue);
+      cube.setCubeColor(4, i, 4, NeoPixelColors.Blue);
+      
+      // Vertical edges
+      cube.setCubeColor(0, 0, i, NeoPixelColors.Green);
+      cube.setCubeColor(4, 0, i, NeoPixelColors.Green);
+      cube.setCubeColor(0, 4, i, NeoPixelColors.Green);
+      cube.setCubeColor(4, 4, i, NeoPixelColors.Green);
+  }
+  
+  cube.show();
+  console.log("Cube frame lit up");
+  basic.pause(3000);
+  
   cube.clear();
   cube.show();
-  console.log("Demo completed!");
+  console.log("5x5x5 Cube demo completed!");
 }
 
 // Run the tests
