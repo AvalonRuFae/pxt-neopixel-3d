@@ -163,7 +163,7 @@ namespace neopixel_3d {
 		/**
 		 * Gets the number of pixels on the x direction
 		 */
-		//% blockId="neopixel_lengthX" block="%cube|x size" blockGap=8
+		//% blockId="neopixel_lengthX" block="%cube|x" blockGap=8
 		//% cube.defl=cube
 		//% weight=63
 		lengthX() {
@@ -173,7 +173,7 @@ namespace neopixel_3d {
 		/**
 		 * Gets the number of pixels on the y direction
 		 */
-		//% blockId="neopixel_lengthY" block="%cube|y size" blockGap=8
+		//% blockId="neopixel_lengthY" block="%cube|y" blockGap=8
 		//% cube.defl=cube
 		//% weight=62
 		lengthY() {
@@ -183,7 +183,7 @@ namespace neopixel_3d {
 		/**
 		 * Gets the number of pixels on the z direction
 		 */
-		//% blockId="neopixel_lengthZ" block="%cube|z size" blockGap=8
+		//% blockId="neopixel_lengthZ" block="%cube|z" blockGap=8
 		//% cube.defl=cube
 		//% weight=61
 		lengthZ() {
@@ -357,7 +357,7 @@ namespace neopixel_3d {
 	 * @param pin the pin where the neopixel is connected.
 	 * @param numleds number of leds in the cube, eg: 24,30,60,64
 	 */
-	//% blockId="neopixel_create" block="NeoPixel cube at pin %pin|size %x|by %y|by %z|as %mode"
+	//% blockId="neopixel_create" block="NeoPixel cube at pin %pin|size x%x|by y%y|by z%z|as %mode"
 
 	//% weight=90 blockGap=8
 	//% parts="neopixel"
