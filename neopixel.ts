@@ -337,6 +337,20 @@ namespace neopixel_3d {
 		}
 
 		/**
+		 * Basiclly a combination of show and clear: this will clear then show
+		 * You need to call ``show`` to make the changes visible.
+		 */
+		//% blockId="neopixel_update" block="%strip|update"
+		//% strip.defl=strip
+		//% weight=80
+		//% parts="neopixel"
+		update(): void {
+			const stride = this._mode === NeoPixelMode.RGBW ? 4 : 3;
+			this.buf.fill(0, this.start * stride, this._length * stride);
+			ws2812b.sendBuffer(this.buf, this.pin);
+		}
+
+		/**
 		 * Gets the number of pixels declared on the strip
 		 */
 		//% blockId="neopixel_length" block="%strip|size" blockGap=8
