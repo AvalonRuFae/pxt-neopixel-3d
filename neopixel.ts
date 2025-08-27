@@ -71,109 +71,6 @@ namespace neopixel_3d {
 		}
 
 		/**
-		 * Shows a rainbow pattern on all LEDs.
-		 * @param startHue the start hue value for the rainbow, eg: 1
-		 * @param endHue the end hue value for the rainbow, eg: 360
-		 */
-		//% blockId="neopixel_set_strip_rainbow" block="%strip|show rainbow from %startHue|to %endHue"
-		//% strip.defl=strip
-		//% weight=85 blockGap=8
-		//% parts="neopixel"
-		showRainbow(startHue: number = 1, endHue: number = 360) {
-			if (this._length <= 0) return;
-
-			startHue = startHue >> 0;
-			endHue = endHue >> 0;
-			const saturation = 100;
-			const luminance = 50;
-			const steps = this._length;
-			const direction = HueInterpolationDirection.Clockwise;
-
-			//hue
-			const h1 = startHue;
-			const h2 = endHue;
-			const hDistCW = (h2 + 360 - h1) % 360;
-			const hStepCW = Math.idiv(hDistCW * 100, steps);
-			const hDistCCW = (h1 + 360 - h2) % 360;
-			const hStepCCW = Math.idiv(-(hDistCCW * 100), steps);
-			let hStep: number;
-			if (direction === HueInterpolationDirection.Clockwise) {
-				hStep = hStepCW;
-			} else if (direction === HueInterpolationDirection.CounterClockwise) {
-				hStep = hStepCCW;
-			} else {
-				hStep = hDistCW < hDistCCW ? hStepCW : hStepCCW;
-			}
-			const h1_100 = h1 * 100; //we multiply by 100 so we keep more accurate results while doing interpolation
-
-			//sat
-			const s1 = saturation;
-			const s2 = saturation;
-			const sDist = s2 - s1;
-			const sStep = Math.idiv(sDist, steps);
-			const s1_100 = s1 * 100;
-
-			//lum
-			const l1 = luminance;
-			const l2 = luminance;
-			const lDist = l2 - l1;
-			const lStep = Math.idiv(lDist, steps);
-			const l1_100 = l1 * 100;
-
-			//interpolate
-			if (steps === 1) {
-				this.setPixelColor(0, hsl(h1 + hStep, s1 + sStep, l1 + lStep));
-			} else {
-				this.setPixelColor(0, hsl(startHue, saturation, luminance));
-				for (let i = 1; i < steps - 1; i++) {
-					const h = Math.idiv(h1_100 + i * hStep, 100) + 360;
-					const s = Math.idiv(s1_100 + i * sStep, 100);
-					const l = Math.idiv(l1_100 + i * lStep, 100);
-					this.setPixelColor(i, hsl(h, s, l));
-				}
-				this.setPixelColor(steps - 1, hsl(endHue, saturation, luminance));
-			}
-			this.show();
-		}
-
-		/**
-		 * Displays a vertical bar graph based on the `value` and `high` value.
-		 * If `high` is 0, the chart gets adjusted automatically.
-		 * @param value current value to plot
-		 * @param high maximum value, eg: 255
-		 */
-		//% weight=84
-		//% blockId=neopixel_show_bar_graph block="%strip|show bar graph of %value|up to %high"
-		//% strip.defl=strip
-		//% icon="\uf080"
-		//% parts="neopixel"
-		showBarGraph(value: number, high: number): void {
-			if (high <= 0) {
-				this.clear();
-				this.setPixelColor(0, NeoPixelColors.Yellow);
-				this.show();
-				return;
-			}
-
-			value = Math.abs(value);
-			const n = this._length;
-			const n1 = n - 1;
-			let v = Math.idiv(value * n, high);
-			if (v == 0) {
-				this.setPixelColor(0, 0x666600);
-				for (let i = 1; i < n; ++i) this.setPixelColor(i, 0);
-			} else {
-				for (let i = 0; i < n; ++i) {
-					if (i <= v) {
-						const b = Math.idiv(i * 255, n1);
-						this.setPixelColor(i, neopixel_3d.rgb(b, 0, 255 - b));
-					} else this.setPixelColor(i, 0);
-				}
-			}
-			this.show();
-		}
-
-		/**
 		 * Set LED to a given color (range 0-255 for r, g, b).
 		 * You need to call ``show`` to make the changes visible.
 		 * @param pixeloffset position of the NeoPixel in the strip
@@ -186,39 +83,6 @@ namespace neopixel_3d {
 		//% parts="neopixel"
 		setPixelColor(pixeloffset: number, rgb: number): void {
 			this.setPixelRGB(pixeloffset >> 0, rgb >> 0);
-		}
-
-		/**
-		 * Sets the number of pixels in a cube shaped strip
-		 * @param x number of pixels in x
-		 * @param y number of pixels in y
-		 * @param z number of pixels in z
-		 */
-		//% blockId=neopixel_set_cube_width block="%strip|set cube size x %x y %y z %z"
-		//% strip.defl=strip
-		//% blockGap=8
-		//% weight=3
-		//% parts="neopixel"
-		setCubeWidth(x: number, y: number, z: number) {
-			x = x >> 0;
-			y = y >> 0;
-			z = z >> 0;
-			if (x <= 0 || y <= 0 || z <= 0) {
-				this._cubeWidthX = 0;
-				this._cubeWidthY = 0;
-				this._cubeWidthZ = 0;
-				return;
-			}
-			const volume = x * y * z;
-			if (volume > this._length) {
-				this._cubeWidthX = 0;
-				this._cubeWidthY = 0;
-				this._cubeWidthZ = 0;
-				return;
-			}
-			this._cubeWidthX = x;
-			this._cubeWidthY = y;
-			this._cubeWidthZ = z;
 		}
 
 		/**
@@ -256,22 +120,6 @@ namespace neopixel_3d {
 			let i =
 				x + y * this._cubeWidthX + z * this._cubeWidthX * this._cubeWidthY;
 			this.setPixelColor(i, rgb);
-		}
-
-		/**
-		 * For NeoPixels with RGB+W LEDs, set the white LED brightness. This only works for RGB+W NeoPixels.
-		 * @param pixeloffset position of the LED in the strip
-		 * @param white brightness of the white LED
-		 */
-		//% blockId="neopixel_set_pixel_white" block="%strip|set pixel white LED at %pixeloffset|to %white"
-		//% strip.defl=strip
-		//% blockGap=8
-		//% weight=80
-		//% parts="neopixel"
-		setPixelWhiteLED(pixeloffset: number, white: number): void {
-			if (this._mode === NeoPixelMode.RGBW) {
-				this.setPixelW(pixeloffset >> 0, white >> 0);
-			}
 		}
 
 		/**
