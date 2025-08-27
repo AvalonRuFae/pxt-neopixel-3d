@@ -339,7 +339,7 @@ namespace neopixel_3d {
 		/**
 		 * Gets the number of pixels declared on the strip
 		 */
-		//% blockId="neopixel_length" block="%strip|length" blockGap=8
+		//% blockId="neopixel_size" block="%strip|length" blockGap=8
 		//% strip.defl=strip
 		//% weight=60
 		length() {
