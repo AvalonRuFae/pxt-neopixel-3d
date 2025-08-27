@@ -139,7 +139,6 @@ namespace neopixel_3d {
 
 		/**
 		 * Basiclly a combination of show and clear: this will clear then show
-		 * You need to call ``show`` to make the changes visible.
 		 */
 		//% blockId="neopixel_update" block="%strip|update"
 		//% strip.defl=strip
