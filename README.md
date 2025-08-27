@@ -7,6 +7,8 @@ On top of the original extension, two functions are added:
     
     setCubeColor: allows user to set color in the cube with xyz coordinates.
 
+For future development, you may refer to the original project of microsoft. Lots of functions are deleted due to the need of weight losing of the extension
+
 Below is the original readme file from microsoft
 
 # NeoPixel driver
