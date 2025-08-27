@@ -154,7 +154,7 @@ namespace neopixel_3d {
 		/**
 		 * Gets the number of pixels declared on the strip
 		 */
-		//% blockId="neopixel_length" block="%strip|size" blockGap=8
+		//% blockId="neopixel_length" block="%strip|total LEDs" blockGap=8
 		//% strip.defl=strip
 		//% weight=60
 		length() {
@@ -166,7 +166,7 @@ namespace neopixel_3d {
 		 */
 		//% blockId="neopixel_lengthX" block="%strip|x size" blockGap=8
 		//% strip.defl=strip
-		//% weight=61
+		//% weight=63
 		lengthX() {
 			return this._cubeWidthX;
 		}
@@ -186,7 +186,7 @@ namespace neopixel_3d {
 		 */
 		//% blockId="neopixel_lengthZ" block="%strip|z size" blockGap=8
 		//% strip.defl=strip
-		//% weight=63
+		//% weight=61
 		lengthZ() {
 			return this._cubeWidthZ;
 		}
