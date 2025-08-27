@@ -60,7 +60,7 @@ namespace neopixel_3d {
 		 * Shows all LEDs to a given color (range 0-255 for r, g, b).
 		 * @param rgb RGB color of the LED
 		 */
-		//% blockId="neopixel_set_cube_color" block="%cube|show color %rgb=neopixel_colors"
+		//% blockId="neopixel_set_color" block="%cube|show color %rgb=neopixel_colors"
 		//% cube.defl=cube
 		//% weight=85 blockGap=8
 		//% parts="neopixel"
@@ -140,7 +140,7 @@ namespace neopixel_3d {
 		/**
 		 * Basiclly a combination of show and clear: this will clear then show
 		 */
-		//% blockId="neopixel_update" block="%cube|update"
+		//% blockId="neopixel_update" block="%cube|clear all"
 		//% cube.defl=cube
 		//% weight=80
 		//% parts="neopixel"
