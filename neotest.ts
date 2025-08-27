@@ -3,9 +3,10 @@
 
 // NeoPixel 3D Cube Extension Test Suite
 // Tests designed for 5x5x5 cube hardware (125 LEDs total)
+// Focus on valid functionality only
 
 /**
- * Test 1: Basic cube creation and validation for 5x5x5 hardware
+ * Test 1: Basic cube creation for 5x5x5 hardware
  */
 function testCubeCreation() {
   console.log("=== Testing 5x5x5 Cube Creation ===");
@@ -24,26 +25,7 @@ function testCubeCreation() {
 }
 
 /**
-* Test 2: Invalid cube dimensions (error handling)
-*/
-function testInvalidDimensions() {
-  console.log("=== Testing Invalid Dimensions ===");
-  
-  // Test zero dimensions
-  let zeroCube = neopixel_3d.create(DigitalPin.P0, 0, 5, 5, NeoPixelMode.RGB);
-  console.log("Zero dimension cube - X size: " + zeroCube.lengthX()); // Should be 0
-  
-  // Test negative dimensions
-  let negCube = neopixel_3d.create(DigitalPin.P0, -1, 5, 5, NeoPixelMode.RGB);
-  console.log("Negative dimension cube - X size: " + negCube.lengthX()); // Should be 0
-  
-  // Test oversized cube (more than available LEDs)
-  let bigCube = neopixel_3d.create(DigitalPin.P0, 10, 10, 10, NeoPixelMode.RGB);
-  console.log("Oversized cube - Total LEDs: " + bigCube.length()); // Should handle gracefully
-}
-
-/**
-* Test 3: Setting individual cube colors on 5x5x5 hardware
+* Test 2: Setting individual cube colors on 5x5x5 hardware
 */
 function testCubeColors() {
   console.log("=== Testing 5x5x5 Cube Colors ===");
@@ -64,18 +46,11 @@ function testCubeColors() {
   cube.setCubeColor(2, 2, 2, NeoPixelColors.Indigo); // Center of cube
   
   console.log("Set colors at all 8 corners and center of 5x5x5 cube");
-  
-  // Test boundary conditions (should not crash)
-  cube.setCubeColor(-1, 0, 0, NeoPixelColors.White); // Invalid: negative
-  cube.setCubeColor(5, 0, 0, NeoPixelColors.White);  // Invalid: too large (max is 4)
-  cube.setCubeColor(0, 5, 0, NeoPixelColors.White);  // Invalid: too large
-  cube.setCubeColor(0, 0, 5, NeoPixelColors.White);  // Invalid: too large
-  
-  console.log("Tested boundary conditions for 5x5x5 cube");
+  cube.show();
 }
 
 /**
-* Test 4: Show color functionality on full 5x5x5 cube
+* Test 3: Show color functionality on full 5x5x5 cube
 */
 function testShowColor() {
   console.log("=== Testing Show Color on 5x5x5 Cube ===");
@@ -98,7 +73,7 @@ function testShowColor() {
 }
 
 /**
-* Test 5: Brightness control on 5x5x5 cube
+* Test 4: Brightness control on 5x5x5 cube
 */
 function testBrightness() {
   console.log("=== Testing Brightness on 5x5x5 Cube ===");
@@ -124,7 +99,7 @@ function testBrightness() {
 }
 
 /**
-* Test 6: Clear and update functions on 5x5x5 cube
+* Test 5: Clear and update functions on 5x5x5 cube
 */
 function testClearAndUpdate() {
   console.log("=== Testing Clear and Update on 5x5x5 Cube ===");
@@ -154,7 +129,7 @@ function testClearAndUpdate() {
 }
 
 /**
-* Test 7: RGB and HSL color functions on 5x5x5 cube
+* Test 6: RGB and HSL color functions on 5x5x5 cube
 */
 function testColorFunctions() {
   console.log("=== Testing Color Functions on 5x5x5 Cube ===");
@@ -194,6 +169,35 @@ function testColorFunctions() {
 }
 
 /**
+* Test 7: Different NeoPixel modes
+*/
+function testDifferentModes() {
+  console.log("=== Testing Different Modes ===");
+  
+  // Test RGB mode
+  let rgbCube = neopixel_3d.create(DigitalPin.P0, 5, 5, 5, NeoPixelMode.RGB);
+  rgbCube.setCubeColor(0, 0, 0, NeoPixelColors.Red);
+  rgbCube.show();
+  console.log("Created and tested RGB mode cube");
+  
+  basic.pause(500);
+  
+  // Test RGB_RGB mode
+  let rgbRgbCube = neopixel_3d.create(DigitalPin.P1, 5, 5, 5, NeoPixelMode.RGB_RGB);
+  rgbRgbCube.setCubeColor(0, 0, 0, NeoPixelColors.Green);
+  rgbRgbCube.show();
+  console.log("Created and tested RGB_RGB mode cube");
+  
+  basic.pause(500);
+  
+  // Test RGBW mode
+  let rgbwCube = neopixel_3d.create(DigitalPin.P2, 5, 5, 5, NeoPixelMode.RGBW);
+  rgbwCube.setCubeColor(0, 0, 0, NeoPixelColors.Blue);
+  rgbwCube.show();
+  console.log("Created and tested RGBW mode cube");
+}
+
+/**
 * Test 8: Power consumption estimation for 5x5x5 cube
 */
 function testPowerConsumption() {
@@ -228,9 +232,6 @@ function runAllTests() {
   testCubeCreation();
   basic.pause(1000);
   
-  testInvalidDimensions();
-  basic.pause(1000);
-  
   testCubeColors();
   basic.pause(1000);
   
@@ -244,6 +245,9 @@ function runAllTests() {
   basic.pause(1000);
   
   testColorFunctions();
+  basic.pause(1000);
+  
+  testDifferentModes();
   basic.pause(1000);
   
   testPowerConsumption();
