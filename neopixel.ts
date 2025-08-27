@@ -339,11 +339,41 @@ namespace neopixel_3d {
 		/**
 		 * Gets the number of pixels declared on the strip
 		 */
-		//% blockId="neopixel_size" block="%strip|length" blockGap=8
+		//% blockId="neopixel_lengthX" block="%strip|size" blockGap=8
 		//% strip.defl=strip
 		//% weight=60
 		length() {
 			return this._length;
+		}
+
+		/**
+		 * Gets the number of pixels on the x direction
+		 */
+		//% blockId="neopixel_lengthX" block="%strip|x size" blockGap=8
+		//% strip.defl=strip
+		//% weight=61
+		lengthX() {
+			return this._cubeWidthX;
+		}
+
+		/**
+		 * Gets the number of pixels on the y direction
+		 */
+		//% blockId="neopixel_lengthY" block="%strip|y size" blockGap=8
+		//% strip.defl=strip
+		//% weight=62
+		lengthY() {
+			return this._cubeWidthY;
+		}
+
+		/**
+		 * Gets the number of pixels on the z direction
+		 */
+		//% blockId="neopixel_lengthZ" block="%strip|z size" blockGap=8
+		//% strip.defl=strip
+		//% weight=63
+		lengthZ() {
+			return this._cubeWidthZ;
 		}
 
 		/**
