@@ -84,7 +84,7 @@ namespace neopixel_3d {
 		 */
 		//% blockId="neopixel_set_cube_color" block="for cube %strip x-coordinate %x y-coordinate %y z-coordinate %z set to color %rgb=neopixel_colors"
 		//% strip.defl=strip
-		//% weight=8
+		//% weight=86
 		//% parts="neopixel"
 		setCubeColor(x: number, y: number, z: number, rgb: number) {
 			if (
