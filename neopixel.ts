@@ -1,5 +1,5 @@
 /**
- * Well known colors for a NeoPixel strip
+ * Well known colors for a NeoPixel cube
  */
 enum NeoPixelColors {
 	//% block=red
@@ -25,7 +25,7 @@ enum NeoPixelColors {
 }
 
 /**
- * Different modes for RGB or RGB+W NeoPixel strips
+ * Different modes for RGB or RGB+W NeoPixel cubes
  */
 enum NeoPixelMode {
 	//% block="RGB (GRB format)"
@@ -37,19 +37,19 @@ enum NeoPixelMode {
 }
 
 /**
- * Functions to operate NeoPixel strips.
+ * Functions to operate NeoPixel cubes.
  */
 //% weight=5 color=#2699BF icon="\uf110"
 namespace neopixel_3d {
 	/**
-	 * A NeoPixel strip
+	 * A NeoPixel cube
 	 */
 	export class Strip {
 		buf: Buffer;
 		pin: DigitalPin;
 		// TODO: encode as bytes instead of 32bit
 		brightness: number;
-		start: number; // start offset in LED strip
+		start: number; // start offset in LED cube
 		_length: number; // number of LEDs
 		_mode: NeoPixelMode;
 		_cubeWidthX: number; // number of leds in a cube in x direction - if any
@@ -60,8 +60,8 @@ namespace neopixel_3d {
 		 * Shows all LEDs to a given color (range 0-255 for r, g, b).
 		 * @param rgb RGB color of the LED
 		 */
-		//% blockId="neopixel_set_strip_color" block="%strip|show color %rgb=neopixel_colors"
-		//% strip.defl=strip
+		//% blockId="neopixel_set_cube_color" block="%cube|show color %rgb=neopixel_colors"
+		//% cube.defl=cube
 		//% weight=85 blockGap=8
 		//% parts="neopixel"
 		showColor(rgb: number) {
@@ -75,15 +75,15 @@ namespace neopixel_3d {
 		}
 
 		/**
-		 * Set LED to a given color (range 0-255 for r, g, b) in a cube shaped strip
+		 * Set LED to a given color (range 0-255 for r, g, b) in a cube shaped cube
 		 * You need to call ``show`` to make the changes visible.
 		 * @param x horizontal position
 		 * @param y horizontal position
 		 * @param z vertical position
 		 * @param rgb RGB color of the LED
 		 */
-		//% blockId="neopixel_set_cube_color" block="for cube %strip x-coordinate %x y-coordinate %y z-coordinate %z set to color %rgb=neopixel_colors"
-		//% strip.defl=strip
+		//% blockId="neopixel_set_cube_color" block="for cube %cube x-coordinate %x y-coordinate %y z-coordinate %z set to color %rgb=neopixel_colors"
+		//% cube.defl=cube
 		//% weight=86
 		//% parts="neopixel"
 		setCubeColor(x: number, y: number, z: number, rgb: number) {
@@ -112,10 +112,10 @@ namespace neopixel_3d {
 		}
 
 		/**
-		 * Send all the changes to the strip.
+		 * Send all the changes to the cube.
 		 */
-		//% blockId="neopixel_show" block="%strip|show" blockGap=8
-		//% strip.defl=strip
+		//% blockId="neopixel_show" block="%cube|show" blockGap=8
+		//% cube.defl=cube
 		//% weight=79
 		//% parts="neopixel"
 		show() {
@@ -128,8 +128,8 @@ namespace neopixel_3d {
 		 * Turn off all LEDs.
 		 * You need to call ``show`` to make the changes visible.
 		 */
-		//% blockId="neopixel_clear" block="%strip|clear"
-		//% strip.defl=strip
+		//% blockId="neopixel_clear" block="%cube|clear"
+		//% cube.defl=cube
 		//% weight=76
 		//% parts="neopixel"
 		clear(): void {
@@ -140,8 +140,8 @@ namespace neopixel_3d {
 		/**
 		 * Basiclly a combination of show and clear: this will clear then show
 		 */
-		//% blockId="neopixel_update" block="%strip|update"
-		//% strip.defl=strip
+		//% blockId="neopixel_update" block="%cube|update"
+		//% cube.defl=cube
 		//% weight=80
 		//% parts="neopixel"
 		update(): void {
@@ -151,10 +151,10 @@ namespace neopixel_3d {
 		}
 
 		/**
-		 * Gets the number of pixels declared on the strip
+		 * Gets the number of pixels declared on the cube
 		 */
-		//% blockId="neopixel_length" block="%strip|total LEDs" blockGap=8
-		//% strip.defl=strip
+		//% blockId="neopixel_length" block="%cube|total LEDs" blockGap=8
+		//% cube.defl=cube
 		//% weight=60
 		length() {
 			return this._length;
@@ -163,8 +163,8 @@ namespace neopixel_3d {
 		/**
 		 * Gets the number of pixels on the x direction
 		 */
-		//% blockId="neopixel_lengthX" block="%strip|x size" blockGap=8
-		//% strip.defl=strip
+		//% blockId="neopixel_lengthX" block="%cube|x size" blockGap=8
+		//% cube.defl=cube
 		//% weight=63
 		lengthX() {
 			return this._cubeWidthX;
@@ -173,8 +173,8 @@ namespace neopixel_3d {
 		/**
 		 * Gets the number of pixels on the y direction
 		 */
-		//% blockId="neopixel_lengthY" block="%strip|y size" blockGap=8
-		//% strip.defl=strip
+		//% blockId="neopixel_lengthY" block="%cube|y size" blockGap=8
+		//% cube.defl=cube
 		//% weight=62
 		lengthY() {
 			return this._cubeWidthY;
@@ -183,19 +183,19 @@ namespace neopixel_3d {
 		/**
 		 * Gets the number of pixels on the z direction
 		 */
-		//% blockId="neopixel_lengthZ" block="%strip|z size" blockGap=8
-		//% strip.defl=strip
+		//% blockId="neopixel_lengthZ" block="%cube|z size" blockGap=8
+		//% cube.defl=cube
 		//% weight=61
 		lengthZ() {
 			return this._cubeWidthZ;
 		}
 
 		/**
-		 * Set the brightness of the strip. This flag only applies to future operation.
+		 * Set the brightness of the cube. This flag only applies to future operation.
 		 * @param brightness a measure of LED brightness in 0-255. eg: 255
 		 */
-		//% blockId="neopixel_set_brightness" block="%strip|set brightness %brightness" blockGap=8
-		//% strip.defl=strip
+		//% blockId="neopixel_set_brightness" block="%cube|set brightness %brightness" blockGap=8
+		//% cube.defl=cube
 		//% weight=59
 		//% parts="neopixel"
 		setBrightness(brightness: number): void {
@@ -205,8 +205,8 @@ namespace neopixel_3d {
 		/**
 		 * Apply brightness to current colors using a quadratic easing function.
 		 **/
-		//% blockId="neopixel_each_brightness" block="%strip|ease brightness" blockGap=8
-		//% strip.defl=strip
+		//% blockId="neopixel_each_brightness" block="%cube|ease brightness" blockGap=8
+		//% cube.defl=cube
 		//% weight=58
 		//% parts="neopixel"
 		easeBrightness(): void {
@@ -252,8 +252,8 @@ namespace neopixel_3d {
 		/**
 		 * Estimates the electrical current (mA) consumed by the current light configuration.
 		 */
-		//% weight=9 blockId=neopixel_power block="%strip|power (mA)"
-		//% strip.defl=strip
+		//% weight=9 blockId=neopixel_power block="%cube|power (mA)"
+		//% cube.defl=cube
 		//%
 		power(): number {
 			const stride = this._mode === NeoPixelMode.RGBW ? 4 : 3;
@@ -355,14 +355,14 @@ namespace neopixel_3d {
 	/**
 	 * Create a new NeoPixel driver for `numleds` LEDs.
 	 * @param pin the pin where the neopixel is connected.
-	 * @param numleds number of leds in the strip, eg: 24,30,60,64
+	 * @param numleds number of leds in the cube, eg: 24,30,60,64
 	 */
 	//% blockId="neopixel_create" block="NeoPixel cube at pin %pin|size %x|by %y|by %z|as %mode"
 
 	//% weight=90 blockGap=8
 	//% parts="neopixel"
 	//% trackArgs=0,2
-	//% blockSetVariable=strip
+	//% blockSetVariable=cube
 	export function create(
 		pin: DigitalPin,
 		x: number,
@@ -374,29 +374,29 @@ namespace neopixel_3d {
 		y = y >> 0;
 		z = z >> 0;
 		const numleds = x * y * z;
-		let strip = new Strip();
+		let cube = new Strip();
 		let stride = mode === NeoPixelMode.RGBW ? 4 : 3;
-		strip.buf = pins.createBuffer(numleds * stride);
-		strip.start = 0;
-		strip._length = numleds;
-		strip._mode = mode || NeoPixelMode.RGB;
-		strip.setBrightness(128);
-		strip.setPin(pin);
+		cube.buf = pins.createBuffer(numleds * stride);
+		cube.start = 0;
+		cube._length = numleds;
+		cube._mode = mode || NeoPixelMode.RGB;
+		cube.setBrightness(128);
+		cube.setPin(pin);
 		// Validate cube dimensions
 		if (x <= 0 || y <= 0 || z <= 0) {
-			strip._cubeWidthX = 0;
-			strip._cubeWidthY = 0;
-			strip._cubeWidthZ = 0;
-			return strip;
+			cube._cubeWidthX = 0;
+			cube._cubeWidthY = 0;
+			cube._cubeWidthZ = 0;
+			return cube;
 		}
 
 		// Set valid cube dimensions
-		strip._cubeWidthX = x;
-		strip._cubeWidthY = y;
-		strip._cubeWidthZ = z;
+		cube._cubeWidthX = x;
+		cube._cubeWidthY = y;
+		cube._cubeWidthZ = z;
 
-		return strip;
-		return strip;
+		return cube;
+		return cube;
 	}
 
 	/**
